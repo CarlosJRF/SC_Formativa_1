@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Clínica Veterinaria - Inicio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <h1 th:text="|Bienvenido a la plataforma: ${name}!|"></h1>
+    </header>
+
+    <main>
+        <div sec:authorize="isAuthenticated()">
+            <p>Hola, <span sec:authentication="name" style="font-weight: bold;"></span>. Has ingresado al sistema seguro.</p>
+            
+            <h3>Gestión de Veterinaria</h3>
+            <ul>
+                <li><a th:href="@{/citas/listar}">Ver Agenda de Citas</a></li>
+                <li><a th:href="@{/citas/nueva}">Agendar Nueva Cita</a></li>
+            </ul>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            <p>Por favor, <a th:href="@{/login}">inicia sesión</a> para gestionar las citas de la clínica.</p>
+        </div>
+    </main>
+
+</body>
+</html>
